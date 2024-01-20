@@ -5,8 +5,9 @@ import java.util.UUID;
 
 
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rhd.learning.springMvcRestServices.model.Beer;
@@ -17,18 +18,19 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 @RestController
 @CrossOrigin
+@RequestMapping("/api/v1/beer")
 public class BeerController {
     
     private final BeerService beerService;
 
     
-    @GetMapping("/api/v1/beer")
+    @RequestMapping(method = RequestMethod.GET)
     public List<Beer> listBeers(){
         return beerService.listBeers();
     }
     
 
-    @GetMapping("/api/v1/beer/{UUID}")
+    @RequestMapping(value = "{UUID}",method = RequestMethod.GET)
     public Beer getBeer(@PathVariable("UUID") String uuid){
         UUID beerId = UUID.fromString(uuid);
         return beerService.getBeerById(beerId);
