@@ -1,5 +1,4 @@
 package com.rhd.learning.springMvcRestServices.services;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -60,4 +59,14 @@ public class CustomerServiceImpl implements CustomerService {
         return this.customerFakeBD.get(uuidToFind);
     }
     
+    @Override
+    public Customer createCustomer(Customer customer){
+        customer.setId(UUID.randomUUID());
+        customer.setVersion(new Random().nextInt());
+        customer.setCreateDate(LocalDateTime.now());
+        customer.setLasModifiedDate(LocalDateTime.now());
+        customerFakeBD.put(customer.getId(), customer);
+        return customer;
+
+    }
 }

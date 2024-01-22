@@ -12,10 +12,8 @@ import org.springframework.stereotype.Service;
 
 import com.rhd.learning.springMvcRestServices.model.Beer;
 
-import lombok.extern.slf4j.Slf4j;
 
 @Service
-@Slf4j
 public class BeerServiceImpl implements BeerService{
 
     HashMap<UUID, Beer> beerMap;
@@ -80,4 +78,5 @@ public class BeerServiceImpl implements BeerService{
         this.beerMap.put(beer.getId(), beer);
         return beer;
     }
+
 }
