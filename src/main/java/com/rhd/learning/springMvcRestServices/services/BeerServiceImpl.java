@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
@@ -68,5 +69,15 @@ public class BeerServiceImpl implements BeerService{
     @Override
     public List<Beer> listBeers(){
         return new ArrayList<>(beerMap.values());
+    }
+
+    @Override
+    public Beer createNewBeer(Beer beer) {
+        beer.setId(UUID.randomUUID());
+        beer.setCreatedDate(LocalDateTime.now());
+        beer.setVersion(new Random().nextInt());
+        beer.setUpdateDate(LocalDateTime.now());
+        this.beerMap.put(beer.getId(), beer);
+        return beer;
     }
 }

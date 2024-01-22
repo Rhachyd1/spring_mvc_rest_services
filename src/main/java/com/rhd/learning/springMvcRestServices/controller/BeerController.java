@@ -3,9 +3,11 @@ package com.rhd.learning.springMvcRestServices.controller;
 import java.util.List;
 import java.util.UUID;
 
-
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,6 +36,12 @@ public class BeerController {
     public Beer getBeer(@PathVariable("UUID") String uuid){
         UUID beerId = UUID.fromString(uuid);
         return beerService.getBeerById(beerId);
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public ResponseEntity<Beer> handlePost(@RequestBody Beer beer){        
+        beerService.createNewBeer(beer);
+        return new ResponseEntity<Beer>(HttpStatus.CREATED);
     }
     
 }
