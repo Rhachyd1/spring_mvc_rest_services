@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.rhd.learning.springMvcRestServices.model.Customer;
 import com.rhd.learning.springMvcRestServices.services.CustomerService;
-import com.rhd.learning.springMvcRestServices.services.CustomerServiceImpl;
 import com.rhd.learning.springMvcRestServices.services.HeaderService;
-import com.rhd.learning.springMvcRestServices.services.HeaderServiceImpl;
+import com.rhd.learning.springMvcRestServices.services.implementations.CustomerServiceImpl;
+import com.rhd.learning.springMvcRestServices.services.implementations.HeaderServiceImpl;
 
 @RestController
 @RequestMapping("/api/v1/customer")

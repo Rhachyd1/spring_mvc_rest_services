@@ -1,9 +1,10 @@
-package com.rhd.learning.springMvcRestServices.services;
+package com.rhd.learning.springMvcRestServices.services.implementations;
 
 import org.springframework.stereotype.Service;
 
 import com.rhd.learning.springMvcRestServices.model.Beer;
 import com.rhd.learning.springMvcRestServices.model.Customer;
+import com.rhd.learning.springMvcRestServices.services.HeaderService;
 
 import lombok.extern.slf4j.Slf4j;
 

@@ -1,4 +1,4 @@
-package com.rhd.learning.springMvcRestServices.services;
+package com.rhd.learning.springMvcRestServices.services.implementations;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,6 +9,7 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 
 import com.rhd.learning.springMvcRestServices.model.Customer;
+import com.rhd.learning.springMvcRestServices.services.CustomerService;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {

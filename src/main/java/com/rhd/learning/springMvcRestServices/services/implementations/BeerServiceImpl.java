@@ -1,4 +1,4 @@
-package com.rhd.learning.springMvcRestServices.services;
+package com.rhd.learning.springMvcRestServices.services.implementations;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -11,6 +11,7 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 
 import com.rhd.learning.springMvcRestServices.model.Beer;
+import com.rhd.learning.springMvcRestServices.services.BeerService;
 
 
 @Service
@@ -78,5 +79,18 @@ public class BeerServiceImpl implements BeerService{
         this.beerMap.put(beer.getId(), beer);
         return beer;
     }
+    @Override
+    public Beer updateBeer(String id, Beer newBeer){
+        UUID idToBeFound = UUID.fromString(id);
+        Beer beerToBeUpdated = this.beerMap.get(idToBeFound);
 
+        beerToBeUpdated.setBeerStyle(newBeer.getBeerStyle());
+        beerToBeUpdated.setName(newBeer.getName());
+        beerToBeUpdated.setPrice(newBeer.getPrice());
+        beerToBeUpdated.setQuantityOnHand(newBeer.getQuantityOnHand());
+        beerToBeUpdated.setUpc(newBeer.getUpc());
+        beerToBeUpdated.setUpdateDate(LocalDateTime.now());
+
+        return beerToBeUpdated;
+    }
 }

@@ -10,4 +10,5 @@ public interface BeerService {
     Beer getBeerById(UUID id);
     List<Beer> listBeers();
     Beer createNewBeer(Beer beer);
+    Beer updateBeer(String id, Beer newBeer);
 } 
