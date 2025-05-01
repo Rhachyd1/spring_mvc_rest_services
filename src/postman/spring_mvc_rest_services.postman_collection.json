@@ -1,0 +1,214 @@
+{
+	"info": {
+		"_postman_id": "1e830142-2921-4252-b627-081e1f049508",
+		"name": "spring_mvc_rest_services",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "4499250"
+	},
+	"item": [
+		{
+			"name": "Beer",
+			"item": [
+				{
+					"name": "GetBeer",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"id\": \"e220b1d0-6983-4499-ab08-1aa5605aa384\",\n        \"name\": \"Other Name1\",\n        \"version\": -1538756893,\n        \"createDate\": \"2025-04-30T20:24:54.490023038\",\n        \"lasModifiedDate\": \"2025-04-30T20:24:54.490032636\"\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/beer",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"beer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetBeerById",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"id\": \"e220b1d0-6983-4499-ab08-1aa5605aa384\",\n        \"name\": \"Other Name1\",\n        \"version\": -1538756893,\n        \"createDate\": \"2025-04-30T20:24:54.490023038\",\n        \"lasModifiedDate\": \"2025-04-30T20:24:54.490032636\"\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/beer",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"beer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateBeer",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"name\": \"Another Name1\",\n        \"id\": \"cfe15990-f194-4d18-9259-2aa92b0dd454\",\n        \"version\": 1,\n        \"beerStyle\": null,\n        \"upc\": \"654321\",\n        \"quantityOnHand\": 101,\n        \"price\": 121.99,\n        \"createdDate\": \"2025-05-01T20:29:52.458481606\",\n        \"updateDate\": \"2025-05-01T20:29:52.4584895\"\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/beer/cfe15990-f194-4d18-9259-2aa92b0dd454",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"beer",
+								"cfe15990-f194-4d18-9259-2aa92b0dd454"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Customer",
+			"item": [
+				{
+					"name": "GetCustomers",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"id\": \"e220b1d0-6983-4499-ab08-1aa5605aa384\",\n        \"name\": \"Other Name1\",\n        \"version\": -1538756893,\n        \"createDate\": \"2025-04-30T20:24:54.490023038\",\n        \"lasModifiedDate\": \"2025-04-30T20:24:54.490032636\"\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/beer",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"beer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetCustomerById",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"id\": \"e220b1d0-6983-4499-ab08-1aa5605aa384\",\n        \"name\": \"Other Name1\",\n        \"version\": -1538756893,\n        \"createDate\": \"2025-04-30T20:24:54.490023038\",\n        \"lasModifiedDate\": \"2025-04-30T20:24:54.490032636\"\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/beer",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"beer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateBeer Copy",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"name\": \"Another Name1\",\n        \"id\": \"cfe15990-f194-4d18-9259-2aa92b0dd454\",\n        \"version\": 1,\n        \"beerStyle\": null,\n        \"upc\": \"654321\",\n        \"quantityOnHand\": 101,\n        \"price\": 121.99,\n        \"createdDate\": \"2025-05-01T20:29:52.458481606\",\n        \"updateDate\": \"2025-05-01T20:29:52.4584895\"\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/beer/cfe15990-f194-4d18-9259-2aa92b0dd454",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"beer",
+								"cfe15990-f194-4d18-9259-2aa92b0dd454"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

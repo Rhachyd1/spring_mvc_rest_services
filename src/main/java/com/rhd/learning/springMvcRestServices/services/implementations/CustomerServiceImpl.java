@@ -70,4 +70,15 @@ public class CustomerServiceImpl implements CustomerService {
         return customer;
 
     }
+
+    @Override
+    public Customer updateCustomer(String id, Customer newCustomer){
+        UUID idToBeFound = UUID.fromString(id);
+        Customer customerToBeUpdated = this.customerFakeBD.get(idToBeFound);
+        
+        customerToBeUpdated.setName(newCustomer.getName());
+        customerToBeUpdated.setLasModifiedDate(LocalDateTime.now());
+
+        return customerToBeUpdated;
+    }
 }

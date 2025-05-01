@@ -18,6 +18,8 @@ import com.rhd.learning.springMvcRestServices.services.CustomerService;
 import com.rhd.learning.springMvcRestServices.services.HeaderService;
 import com.rhd.learning.springMvcRestServices.services.implementations.CustomerServiceImpl;
 import com.rhd.learning.springMvcRestServices.services.implementations.HeaderServiceImpl;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 @RestController
 @RequestMapping("/api/v1/customer")
@@ -49,5 +51,13 @@ public class CustomerController {
         Customer savedCustomer = customerService.createCustomer(customer);
         headers.add("Location", headerService.locationBuilder(baseUrl, savedCustomer));
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity<Customer> putMethodName(@PathVariable String id, @RequestBody Customer newCustomer) {
+        HttpHeaders headers = new HttpHeaders();
+        Customer updatedCustomer = customerService.updateCustomer(id, newCustomer);
+        headers.add("Location", headerService.locationBuilder(baseUrl, updatedCustomer));
+        return new ResponseEntity<>(headers, HttpStatus.NO_CONTENT);
     }
 }

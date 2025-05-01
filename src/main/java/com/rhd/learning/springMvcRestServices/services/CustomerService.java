@@ -9,5 +9,5 @@ public interface CustomerService {
     public List<Customer> getAllCustomers();
     public Customer getCustomerById(String uuid);
     public Customer createCustomer(Customer customer);
-    
+    public Customer updateCustomer(String id, Customer customer);
 }
