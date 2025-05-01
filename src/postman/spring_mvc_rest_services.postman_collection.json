@@ -76,6 +76,37 @@
 					"response": []
 				},
 				{
+					"name": "DeleteBeerById",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"id\": \"e220b1d0-6983-4499-ab08-1aa5605aa384\",\n        \"name\": \"Other Name1\",\n        \"version\": -1538756893,\n        \"createDate\": \"2025-04-30T20:24:54.490023038\",\n        \"lasModifiedDate\": \"2025-04-30T20:24:54.490032636\"\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/beer/f535631d-bd77-48ac-a27f-2d931ca5c4b1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"beer",
+								"f535631d-bd77-48ac-a27f-2d931ca5c4b1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "UpdateBeer",
 					"request": {
 						"method": "PUT",
@@ -203,6 +234,37 @@
 								"v1",
 								"beer",
 								"cfe15990-f194-4d18-9259-2aa92b0dd454"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteCustomerById",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"id\": \"e220b1d0-6983-4499-ab08-1aa5605aa384\",\n        \"name\": \"Other Name1\",\n        \"version\": -1538756893,\n        \"createDate\": \"2025-04-30T20:24:54.490023038\",\n        \"lasModifiedDate\": \"2025-04-30T20:24:54.490032636\"\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/customer/f535631d-bd77-48ac-a27f-2d931ca5c4b1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"customer",
+								"f535631d-bd77-48ac-a27f-2d931ca5c4b1"
 							]
 						}
 					},

@@ -93,4 +93,10 @@ public class BeerServiceImpl implements BeerService{
 
         return beerToBeUpdated;
     }
+
+    @Override
+    public void removeBeer(String id) {
+       UUID idToBeFound = UUID.fromString(id);
+       this.beerMap.remove(idToBeFound);
+    }
 }

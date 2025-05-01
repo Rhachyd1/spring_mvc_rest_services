@@ -81,4 +81,10 @@ public class CustomerServiceImpl implements CustomerService {
 
         return customerToBeUpdated;
     }
+
+    @Override
+    public void deleteCustomer(String id) {
+        UUID idToBeFound = UUID.fromString(id);
+        this.customerFakeBD.remove(idToBeFound);
+    }
 }

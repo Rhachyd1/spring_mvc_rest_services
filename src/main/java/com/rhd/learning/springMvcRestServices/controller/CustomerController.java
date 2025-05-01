@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -59,5 +60,10 @@ public class CustomerController {
         Customer updatedCustomer = customerService.updateCustomer(id, newCustomer);
         headers.add("Location", headerService.locationBuilder(baseUrl, updatedCustomer));
         return new ResponseEntity<>(headers, HttpStatus.NO_CONTENT);
+    }
+    @DeleteMapping("{id}")
+    public ResponseEntity<Customer> handleDelete(@PathVariable("id") String id){
+        customerService.deleteCustomer(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

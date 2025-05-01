@@ -10,4 +10,5 @@ public interface CustomerService {
     public Customer getCustomerById(String uuid);
     public Customer createCustomer(Customer customer);
     public Customer updateCustomer(String id, Customer customer);
+    public void deleteCustomer(String id);
 }
