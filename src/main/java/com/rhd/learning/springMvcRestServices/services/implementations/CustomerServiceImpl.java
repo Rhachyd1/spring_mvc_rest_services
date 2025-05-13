@@ -3,6 +3,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 import java.util.UUID;
 
@@ -86,5 +87,14 @@ public class CustomerServiceImpl implements CustomerService {
     public void deleteCustomer(String id) {
         UUID idToBeFound = UUID.fromString(id);
         this.customerFakeBD.remove(idToBeFound);
+    }
+    @Override
+    public void patchCustomer(String id, Customer customer){
+        UUID idToBeFound = UUID.fromString(id);
+        Customer customerToBeUpdated = this.customerFakeBD.get(idToBeFound);
+        if(Objects.nonNull(customer.getName())){
+            customerToBeUpdated.setName(customer.getName());
+        }
+        customerToBeUpdated.setLasModifiedDate(LocalDateTime.now());
     }
 }

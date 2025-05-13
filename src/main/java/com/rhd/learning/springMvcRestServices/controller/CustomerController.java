@@ -2,11 +2,13 @@ package com.rhd.learning.springMvcRestServices.controller;
 
 import java.util.List;
 
+import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -64,6 +66,10 @@ public class CustomerController {
     @DeleteMapping("{id}")
     public ResponseEntity<Customer> handleDelete(@PathVariable("id") String id){
         customerService.deleteCustomer(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+    @PatchMapping("{id}")
+    public ResponseEntity<Customer> handlePatch(@PathVariable("id") String id, Customer customer){
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

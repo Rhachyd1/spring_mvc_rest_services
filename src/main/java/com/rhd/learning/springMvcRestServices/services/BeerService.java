@@ -12,4 +12,5 @@ public interface BeerService {
     Beer createNewBeer(Beer beer);
     Beer updateBeer(String id, Beer newBeer);
     void removeBeer(String id);
+    void patchBeer(String id, Beer patchBeer);
 } 

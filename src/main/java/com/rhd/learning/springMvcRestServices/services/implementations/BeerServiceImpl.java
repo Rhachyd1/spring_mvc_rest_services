@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 import java.util.UUID;
 
@@ -98,5 +99,23 @@ public class BeerServiceImpl implements BeerService{
     public void removeBeer(String id) {
        UUID idToBeFound = UUID.fromString(id);
        this.beerMap.remove(idToBeFound);
+    }
+    @Override
+    public void patchBeer(String id, Beer patchBeer){
+        UUID uuidToBeFound = UUID.fromString(id);
+        Beer beerToPatch = this.beerMap.get(uuidToBeFound);
+        if(Objects.nonNull(patchBeer.getName())){
+            beerToPatch.setName(patchBeer.getName());
+        }
+        if(Objects.nonNull(patchBeer.getPrice())){
+            beerToPatch.setPrice(patchBeer.getPrice());
+        }
+        if(Objects.nonNull(patchBeer.getQuantityOnHand())){
+            beerToPatch.setQuantityOnHand(patchBeer.getQuantityOnHand());
+        }
+        if(Objects.nonNull(patchBeer.getUpc())){
+            beerToPatch.setUpc(patchBeer.getUpc());
+        }
+        beerToPatch.setUpdateDate(LocalDateTime.now());
     }
 }
