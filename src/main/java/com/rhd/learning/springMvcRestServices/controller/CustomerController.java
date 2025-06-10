@@ -21,22 +21,20 @@ import com.rhd.learning.springMvcRestServices.services.CustomerService;
 import com.rhd.learning.springMvcRestServices.services.HeaderService;
 import com.rhd.learning.springMvcRestServices.services.implementations.CustomerServiceImpl;
 import com.rhd.learning.springMvcRestServices.services.implementations.HeaderServiceImpl;
+
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.web.bind.annotation.PutMapping;
 
 
 @RestController
 @RequestMapping("/api/v1/customer")
+@RequiredArgsConstructor
 public class CustomerController {
  
     private final CustomerService customerService;
     private final HeaderService headerService;
     private final String baseUrl="/api/v1/customer/";
-
-    @Autowired
-    public CustomerController(CustomerServiceImpl customerService, HeaderServiceImpl headerServiceImpl){
-        this.customerService = customerService;
-        this.headerService = headerServiceImpl;
-    }
 
     @RequestMapping(method = RequestMethod.GET)
     public List<Customer> getAllCustomers(){
