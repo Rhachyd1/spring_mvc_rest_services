@@ -36,7 +36,7 @@ public class CustomerControllerTest {
     public void getCustomerById() throws Exception{
         Customer testCustomer = customerServiceImpl.getAllCustomers().get(0);
         given(customerService.getCustomerById(testCustomer.getId().toString())).willReturn(testCustomer);
-        
+         
         mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/customer/"+testCustomer.getId()).accept(MediaType.APPLICATION_JSON) )
         .andExpectAll(status().isOk())
         .andExpect(content().contentType(MediaType.APPLICATION_JSON))
