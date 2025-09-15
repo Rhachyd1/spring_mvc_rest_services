@@ -1,7 +1,11 @@
 package com.rhd.learning.springMvcRestServices.controller;
 
 import static org.hamcrest.core.Is.is;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -9,13 +13,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rhd.learning.springMvcRestServices.model.Customer;
 import com.rhd.learning.springMvcRestServices.services.CustomerService;
 import com.rhd.learning.springMvcRestServices.services.HeaderService;
@@ -29,6 +36,9 @@ public class CustomerControllerTest {
 
     @Autowired
     MockMvc mockMvc;
+
+    @Autowired
+    ObjectMapper objectMapper;
 
     CustomerServiceImpl customerServiceImpl = new CustomerServiceImpl();
 
@@ -51,5 +61,55 @@ public class CustomerControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/customer").accept(MediaType.APPLICATION_JSON))
         .andExpect(content().contentType(MediaType.APPLICATION_JSON))
         .andExpect(jsonPath("$.length()",is(customers.size() ) ) );
+    }
+
+    @Test
+    public void createNewCustomer() throws Exception{
+        Customer newCustomer = customerServiceImpl.getAllCustomers().get(0);
+        newCustomer.setId(null);
+        newCustomer.setVersion(null);
+
+
+        given(customerService.createCustomer(any(Customer.class))).willReturn(customerServiceImpl.getAllCustomers().get(2));
+        given(headerService.locationBuilder(anyString(), any(Customer.class))).willReturn(anyString());
+
+        mockMvc.perform(
+            MockMvcRequestBuilders.post("/api/v1/customer").accept(MediaType.APPLICATION_JSON)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(newCustomer))
+        ).andExpect(MockMvcResultMatchers.status().isCreated())
+        .andExpect(MockMvcResultMatchers.header().exists("Location"));
+    }
+
+    @Test
+    public void updateCustomer() throws Exception{
+        Customer customerToBeUpdated = customerServiceImpl.getAllCustomers().get(0);
+        customerToBeUpdated.setName("newName");
+
+        given(customerService.getCustomerById(anyString()))
+        .willReturn(customerServiceImpl.getAllCustomers().get(0));
+
+        final String finalUrl = "/api/v1/customer/"+customerToBeUpdated.getId();
+        mockMvc.perform(
+            MockMvcRequestBuilders.put(finalUrl)
+            .accept(MediaType.APPLICATION_JSON)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(customerToBeUpdated))
+        ).andExpect(MockMvcResultMatchers.status().isNoContent());
+    }
+
+    @Test
+    public void deleteCustomer() throws Exception{
+        final Customer customerToBeRemoved = customerServiceImpl.getAllCustomers().get(0);
+        final String finalUrl = "/api/v1/customer"+"/"+customerToBeRemoved.getId();
+
+        mockMvc.perform(
+            MockMvcRequestBuilders.delete(finalUrl)
+        ).andExpect(MockMvcResultMatchers.status().isNoContent());
+
+        ArgumentCaptor<String> customerCatch  = ArgumentCaptor.forClass(String.class);
+        verify(customerService).deleteCustomer(customerCatch.capture());
+        assertEquals(customerToBeRemoved.getId().toString(), customerCatch.getValue());
+        
     }
 }

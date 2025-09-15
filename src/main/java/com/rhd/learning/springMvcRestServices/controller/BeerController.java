@@ -20,7 +20,6 @@ import com.rhd.learning.springMvcRestServices.model.Beer;
 import com.rhd.learning.springMvcRestServices.services.BeerService;
 import com.rhd.learning.springMvcRestServices.services.HeaderService;
 
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor

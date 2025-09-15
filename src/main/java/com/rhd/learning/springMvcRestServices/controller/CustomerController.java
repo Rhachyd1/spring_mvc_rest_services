@@ -3,7 +3,6 @@ package com.rhd.learning.springMvcRestServices.controller;
 import java.util.List;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,9 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.rhd.learning.springMvcRestServices.model.Customer;
 import com.rhd.learning.springMvcRestServices.services.CustomerService;
 import com.rhd.learning.springMvcRestServices.services.HeaderService;
-import com.rhd.learning.springMvcRestServices.services.implementations.CustomerServiceImpl;
-import com.rhd.learning.springMvcRestServices.services.implementations.HeaderServiceImpl;
-
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.web.bind.annotation.PutMapping;
