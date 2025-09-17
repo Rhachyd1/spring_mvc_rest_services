@@ -2,11 +2,10 @@ package com.rhd.learning.springMvcRestServices.controller;
 
 
 import java.util.List;
-import java.util.UUID;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -21,7 +20,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -56,7 +54,10 @@ public class BeerControllerTest {
     HeaderService headerService;
 
     private BeerServiceImpl beerServiceImpl;
-    final String baseUrl = "/api/v1/beer";
+    final String BASE_URL = "/api/v1/beer";
+
+    @Captor
+    ArgumentCaptor<String> catchBeer;
 
     @BeforeEach
     void setUp(){
@@ -70,7 +71,7 @@ public class BeerControllerTest {
        
        given(beerService.getBeerById(testBeer.getId())).willReturn(testBeer);
 
-       mockMvc.perform(MockMvcRequestBuilders.get(baseUrl+"/"+testBeer.getId())
+       mockMvc.perform(MockMvcRequestBuilders.get(BASE_URL+"/"+testBeer.getId())
         .accept(MediaType.APPLICATION_JSON))
         .andExpect(MockMvcResultMatchers.status().isOk())
         .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
@@ -85,7 +86,7 @@ public class BeerControllerTest {
         
         given(beerService.listBeers()).willReturn(beers);
 
-        mockMvc.perform(MockMvcRequestBuilders.get(baseUrl)
+        mockMvc.perform(MockMvcRequestBuilders.get(BASE_URL)
         .accept(MediaType.APPLICATION_JSON)).andExpect(MockMvcResultMatchers.status().isOk())
         .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
         //In Array is Length; in List is Size
@@ -106,7 +107,7 @@ public class BeerControllerTest {
         given(headerService.locationBuilder(anyString(), any(Beer.class)))
         .willReturn(anyString());
         
-        final String testUrl = baseUrl;
+        final String testUrl = BASE_URL;
 
         mockMvc.perform(
           MockMvcRequestBuilders
@@ -126,7 +127,7 @@ public class BeerControllerTest {
         Beer beerToUpdate = beerServiceImpl.listBeers().get(0);
         beerToUpdate.setName("updatedName");
 
-        final String testUrl = baseUrl+"/"+beerToUpdate.getId();
+        final String testUrl = BASE_URL+"/"+beerToUpdate.getId();
 
         mockMvc.perform(
             MockMvcRequestBuilders.put(testUrl)
@@ -144,14 +145,13 @@ public class BeerControllerTest {
     @Test
     public void testDeleteBeer() throws Exception{
         Beer beerToDelete = beerServiceImpl.listBeers().get(0);
-        final String finalUrl = baseUrl+"/"+beerToDelete.getId();
+        final String finalUrl = BASE_URL+"/"+beerToDelete.getId();
         mockMvc.perform(
             MockMvcRequestBuilders.delete(finalUrl)
         ).andExpect(
             MockMvcResultMatchers.status().isNoContent()
-        );
-        ArgumentCaptor<String> catchBeer = ArgumentCaptor.forClass(String.class);
-        
+        );        
+        //Im Using String because the method's argument is an String
         verify(beerService).removeBeer(catchBeer.capture());
         assertEquals(beerToDelete.getId().toString(), catchBeer.getValue());
     }

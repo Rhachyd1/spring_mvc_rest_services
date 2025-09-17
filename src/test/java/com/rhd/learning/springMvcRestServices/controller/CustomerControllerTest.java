@@ -14,6 +14,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
@@ -41,13 +42,17 @@ public class CustomerControllerTest {
     ObjectMapper objectMapper;
 
     CustomerServiceImpl customerServiceImpl = new CustomerServiceImpl();
+    @Captor
+    ArgumentCaptor<String> customerCatch;
+
+    private final String BASE_URL ="/api/v1/customer";
 
     @Test
     public void getCustomerById() throws Exception{
         Customer testCustomer = customerServiceImpl.getAllCustomers().get(0);
         given(customerService.getCustomerById(testCustomer.getId().toString())).willReturn(testCustomer);
          
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/customer/"+testCustomer.getId()).accept(MediaType.APPLICATION_JSON) )
+        mockMvc.perform(MockMvcRequestBuilders.get(BASE_URL+"/"+testCustomer.getId()).accept(MediaType.APPLICATION_JSON) )
         .andExpectAll(status().isOk())
         .andExpect(content().contentType(MediaType.APPLICATION_JSON))
         .andExpect(jsonPath("$.id", is( testCustomer.getId().toString()) ) )
@@ -58,7 +63,7 @@ public class CustomerControllerTest {
     public void getCustomers() throws Exception{
         List<Customer> customers = customerService.getAllCustomers();
         given(customerService.getAllCustomers()).willReturn(customers);
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/customer").accept(MediaType.APPLICATION_JSON))
+        mockMvc.perform(MockMvcRequestBuilders.get(BASE_URL).accept(MediaType.APPLICATION_JSON))
         .andExpect(content().contentType(MediaType.APPLICATION_JSON))
         .andExpect(jsonPath("$.length()",is(customers.size() ) ) );
     }
@@ -74,7 +79,7 @@ public class CustomerControllerTest {
         given(headerService.locationBuilder(anyString(), any(Customer.class))).willReturn(anyString());
 
         mockMvc.perform(
-            MockMvcRequestBuilders.post("/api/v1/customer").accept(MediaType.APPLICATION_JSON)
+            MockMvcRequestBuilders.post(BASE_URL).accept(MediaType.APPLICATION_JSON)
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(newCustomer))
         ).andExpect(MockMvcResultMatchers.status().isCreated())
@@ -89,7 +94,7 @@ public class CustomerControllerTest {
         given(customerService.getCustomerById(anyString()))
         .willReturn(customerServiceImpl.getAllCustomers().get(0));
 
-        final String finalUrl = "/api/v1/customer/"+customerToBeUpdated.getId();
+        final String finalUrl =BASE_URL+"/"+customerToBeUpdated.getId();
         mockMvc.perform(
             MockMvcRequestBuilders.put(finalUrl)
             .accept(MediaType.APPLICATION_JSON)
@@ -101,13 +106,13 @@ public class CustomerControllerTest {
     @Test
     public void deleteCustomer() throws Exception{
         final Customer customerToBeRemoved = customerServiceImpl.getAllCustomers().get(0);
-        final String finalUrl = "/api/v1/customer"+"/"+customerToBeRemoved.getId();
+        final String finalUrl = BASE_URL+"/"+customerToBeRemoved.getId();
 
         mockMvc.perform(
             MockMvcRequestBuilders.delete(finalUrl)
         ).andExpect(MockMvcResultMatchers.status().isNoContent());
 
-        ArgumentCaptor<String> customerCatch  = ArgumentCaptor.forClass(String.class);
+        //Im Using String because the method's argument is an String
         verify(customerService).deleteCustomer(customerCatch.capture());
         assertEquals(customerToBeRemoved.getId().toString(), customerCatch.getValue());
         
