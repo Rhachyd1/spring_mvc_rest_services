@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.rhd.learning.springMvcRestServices.model.Beer;
 import com.rhd.learning.springMvcRestServices.services.BeerService;
 import com.rhd.learning.springMvcRestServices.services.HeaderService;
@@ -42,7 +43,7 @@ public class BeerController {
     @RequestMapping(value = "{UUID}",method = RequestMethod.GET)
     public Beer getBeer(@PathVariable("UUID") String uuid){
         UUID beerId = UUID.fromString(uuid);
-        return beerService.getBeerById(beerId);
+        return beerService.getBeerById(beerId).orElseThrow();
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -71,4 +72,6 @@ public class BeerController {
         this.beerService.patchBeer(id, beer);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+
 }

@@ -1,13 +1,14 @@
 package com.rhd.learning.springMvcRestServices.services;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import com.rhd.learning.springMvcRestServices.model.Beer;
 
 public interface BeerService {
 
-    Beer getBeerById(UUID id);
+    Optional<Beer> getBeerById(UUID id);
     List<Beer> listBeers();
     Beer createNewBeer(Beer beer);
     Beer updateBeer(String id, Beer newBeer);

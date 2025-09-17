@@ -2,6 +2,9 @@ package com.rhd.learning.springMvcRestServices.controller;
 
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -23,6 +26,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.rhd.learning.springMvcRestServices.exception.NotFoundException;
 import com.rhd.learning.springMvcRestServices.model.Beer;
 import com.rhd.learning.springMvcRestServices.services.BeerService;
 import com.rhd.learning.springMvcRestServices.services.HeaderService;
@@ -69,7 +73,7 @@ public class BeerControllerTest {
     public void getBeerByIdTest() throws Exception{        
        Beer testBeer = beerServiceImpl.listBeers().get(0);
        
-       given(beerService.getBeerById(testBeer.getId())).willReturn(testBeer);
+       given(beerService.getBeerById(testBeer.getId())).willReturn(Optional.of(testBeer));
 
        mockMvc.perform(MockMvcRequestBuilders.get(BASE_URL+"/"+testBeer.getId())
         .accept(MediaType.APPLICATION_JSON))
@@ -154,5 +158,13 @@ public class BeerControllerTest {
         //Im Using String because the method's argument is an String
         verify(beerService).removeBeer(catchBeer.capture());
         assertEquals(beerToDelete.getId().toString(), catchBeer.getValue());
+    }
+
+    @Test
+    public void testNotFoundException() throws Exception{
+        Beer beerToDelete = beerServiceImpl.listBeers().get(0);
+        final String finalUrl = BASE_URL+"/"+beerToDelete.getId();
+        given(beerService.getBeerById(any(UUID.class))).willThrow(NotFoundException.class);
+        mockMvc.perform(MockMvcRequestBuilders.get(finalUrl)).andExpect(MockMvcResultMatchers.status().isNotFound());
     }
 }
