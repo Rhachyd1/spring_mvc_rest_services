@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 
-import org.hibernate.annotations.UuidGenerator;
+
 
 import com.rhd.learning.springMvcRestServices.model.BeerStyle;
 
@@ -14,21 +14,25 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Version;
-
+import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
-import lombok.ToString;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.annotations.UuidGenerator;
 
-@Data
-@ToString
+@Getter
+@Setter
 @Builder
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 public class Beer {
     
     @Id
     @GeneratedValue(generator = "UUID")
-    @UuidGenerator
     @Column(length=36, columnDefinition ="varchar", updatable = false, nullable=false)
+    @UuidGenerator
     private UUID id;
     private String name;
     

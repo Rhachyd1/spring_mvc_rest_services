@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 //import org.springframework.data.repository.CrudRepository;
 
 import com.rhd.learning.springMvcRestServices.entities.Beer;
-@Repository
 public interface BeerRepository extends JpaRepository<Beer, UUID> {
     
 }
