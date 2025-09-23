@@ -8,10 +8,10 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import com.rhd.learning.springMvcRestServices.entities.Customer;
 
-@DataJpaTest
+@DataJpaTest//Autoconfigure everything
 public class CustomerRepositoryTest {
 
-    @Autowired
+    @Autowired//creates at runtime repo code;
     private CustomerRepository repository;
 
     @Test
