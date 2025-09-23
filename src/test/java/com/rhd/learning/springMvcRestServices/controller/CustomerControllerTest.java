@@ -24,7 +24,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.rhd.learning.springMvcRestServices.model.Customer;
+import com.rhd.learning.springMvcRestServices.model.CustomerDTO;
 import com.rhd.learning.springMvcRestServices.services.CustomerService;
 import com.rhd.learning.springMvcRestServices.services.HeaderService;
 import com.rhd.learning.springMvcRestServices.services.implementations.CustomerServiceImpl;
@@ -49,7 +49,7 @@ public class CustomerControllerTest {
 
     @Test
     public void getCustomerById() throws Exception{
-        Customer testCustomer = customerServiceImpl.getAllCustomers().get(0);
+        CustomerDTO testCustomer = customerServiceImpl.getAllCustomers().get(0);
         given(customerService.getCustomerById(testCustomer.getId().toString())).willReturn(testCustomer);
          
         mockMvc.perform(MockMvcRequestBuilders.get(BASE_URL+"/"+testCustomer.getId()).accept(MediaType.APPLICATION_JSON) )
@@ -61,7 +61,7 @@ public class CustomerControllerTest {
 
     @Test
     public void getCustomers() throws Exception{
-        List<Customer> customers = customerService.getAllCustomers();
+        List<CustomerDTO> customers = customerService.getAllCustomers();
         given(customerService.getAllCustomers()).willReturn(customers);
         mockMvc.perform(MockMvcRequestBuilders.get(BASE_URL).accept(MediaType.APPLICATION_JSON))
         .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -70,13 +70,13 @@ public class CustomerControllerTest {
 
     @Test
     public void createNewCustomer() throws Exception{
-        Customer newCustomer = customerServiceImpl.getAllCustomers().get(0);
+        CustomerDTO newCustomer = customerServiceImpl.getAllCustomers().get(0);
         newCustomer.setId(null);
         newCustomer.setVersion(null);
 
 
-        given(customerService.createCustomer(any(Customer.class))).willReturn(customerServiceImpl.getAllCustomers().get(2));
-        given(headerService.locationBuilder(anyString(), any(Customer.class))).willReturn(anyString());
+        given(customerService.createCustomer(any(CustomerDTO.class))).willReturn(customerServiceImpl.getAllCustomers().get(2));
+        given(headerService.locationBuilder(anyString(), any(CustomerDTO.class))).willReturn(anyString());
 
         mockMvc.perform(
             MockMvcRequestBuilders.post(BASE_URL).accept(MediaType.APPLICATION_JSON)
@@ -88,7 +88,7 @@ public class CustomerControllerTest {
 
     @Test
     public void updateCustomer() throws Exception{
-        Customer customerToBeUpdated = customerServiceImpl.getAllCustomers().get(0);
+        CustomerDTO customerToBeUpdated = customerServiceImpl.getAllCustomers().get(0);
         customerToBeUpdated.setName("newName");
 
         given(customerService.getCustomerById(anyString()))
@@ -105,7 +105,7 @@ public class CustomerControllerTest {
 
     @Test
     public void deleteCustomer() throws Exception{
-        final Customer customerToBeRemoved = customerServiceImpl.getAllCustomers().get(0);
+        final CustomerDTO customerToBeRemoved = customerServiceImpl.getAllCustomers().get(0);
         final String finalUrl = BASE_URL+"/"+customerToBeRemoved.getId();
 
         mockMvc.perform(

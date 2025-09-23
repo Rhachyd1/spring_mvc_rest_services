@@ -4,14 +4,14 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import com.rhd.learning.springMvcRestServices.model.Beer;
+import com.rhd.learning.springMvcRestServices.model.BeerDTO;
 
 public interface BeerService {
 
-    Optional<Beer> getBeerById(UUID id);
-    List<Beer> listBeers();
-    Beer createNewBeer(Beer beer);
-    Beer updateBeer(String id, Beer newBeer);
+    Optional<BeerDTO> getBeerById(UUID id);
+    List<BeerDTO> listBeers();
+    BeerDTO createNewBeer(BeerDTO beer);
+    BeerDTO updateBeer(String id, BeerDTO newBeer);
     void removeBeer(String id);
-    void patchBeer(String id, Beer patchBeer);
+    void patchBeer(String id, BeerDTO patchBeer);
 } 

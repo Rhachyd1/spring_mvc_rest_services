@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.rhd.learning.springMvcRestServices.model.Customer;
+import com.rhd.learning.springMvcRestServices.model.CustomerDTO;
 import com.rhd.learning.springMvcRestServices.services.CustomerService;
 import com.rhd.learning.springMvcRestServices.services.HeaderService;
 import lombok.RequiredArgsConstructor;
@@ -33,37 +33,37 @@ public class CustomerController {
     private final String baseUrl="/api/v1/customer/";
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<Customer> getAllCustomers(){
+    public List<CustomerDTO> getAllCustomers(){
         return this.customerService.getAllCustomers();
     }
 
     @RequestMapping(value="{uuid}", method = RequestMethod.GET)
-    public Customer getCustomerByID(@PathVariable("uuid") String uuid){        
+    public CustomerDTO getCustomerByID(@PathVariable("uuid") String uuid){        
         return this.customerService.getCustomerById(uuid);
     }
 
     @PostMapping
-    public ResponseEntity<Customer> createNewCustomer(@RequestBody Customer customer){
+    public ResponseEntity<CustomerDTO> createNewCustomer(@RequestBody CustomerDTO customer){
         HttpHeaders headers = new HttpHeaders();
-        Customer savedCustomer = customerService.createCustomer(customer);
+        CustomerDTO savedCustomer = customerService.createCustomer(customer);
         headers.add("Location", headerService.locationBuilder(baseUrl, savedCustomer));
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<Customer> putMethodName(@PathVariable String id, @RequestBody Customer newCustomer) {
+    public ResponseEntity<CustomerDTO> putMethodName(@PathVariable String id, @RequestBody CustomerDTO newCustomer) {
         HttpHeaders headers = new HttpHeaders();
-        Customer updatedCustomer = customerService.updateCustomer(id, newCustomer);
+        CustomerDTO updatedCustomer = customerService.updateCustomer(id, newCustomer);
         headers.add("Location", headerService.locationBuilder(baseUrl, updatedCustomer));
         return new ResponseEntity<>(headers, HttpStatus.NO_CONTENT);
     }
     @DeleteMapping("{id}")
-    public ResponseEntity<Customer> handleDelete(@PathVariable("id") String id){
+    public ResponseEntity<CustomerDTO> handleDelete(@PathVariable("id") String id){
         customerService.deleteCustomer(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
     @PatchMapping("{id}")
-    public ResponseEntity<Customer> handlePatch(@PathVariable("id") String id, Customer customer){
+    public ResponseEntity<CustomerDTO> handlePatch(@PathVariable("id") String id, CustomerDTO customer){
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

@@ -9,19 +9,19 @@ import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
-import com.rhd.learning.springMvcRestServices.model.Customer;
+import com.rhd.learning.springMvcRestServices.model.CustomerDTO;
 import com.rhd.learning.springMvcRestServices.services.CustomerService;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
 
 
-    private HashMap<UUID, Customer> customerFakeBD;
+    private HashMap<UUID, CustomerDTO> customerFakeBD;
 
     public CustomerServiceImpl(){
         this.customerFakeBD = new HashMap<>();
 
-        Customer customer1 = Customer.builder()
+        CustomerDTO customer1 = CustomerDTO.builder()
                 .name("A Name")
                 .id(UUID.randomUUID())
                 .createDate(LocalDateTime.now())
@@ -29,7 +29,7 @@ public class CustomerServiceImpl implements CustomerService {
                 .version(new Random().nextInt())
             .build();
 
-        Customer customer2 = Customer.builder()
+        CustomerDTO customer2 = CustomerDTO.builder()
                 .name("Other Name")
                 .id(UUID.randomUUID())
                 .createDate(LocalDateTime.now())
@@ -37,7 +37,7 @@ public class CustomerServiceImpl implements CustomerService {
                 .version(new Random().nextInt())
             .build();
 
-        Customer customer3 = Customer.builder()
+        CustomerDTO customer3 = CustomerDTO.builder()
                 .name("Another Name")
                 .id(UUID.randomUUID())
                 .createDate(LocalDateTime.now())
@@ -51,18 +51,18 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public List<Customer> getAllCustomers() {
+    public List<CustomerDTO> getAllCustomers() {
         return new ArrayList<>(this.customerFakeBD.values());
     }
 
     @Override
-    public Customer getCustomerById(String uuid) {
+    public CustomerDTO getCustomerById(String uuid) {
         UUID uuidToFind = UUID.fromString(uuid);
         return this.customerFakeBD.get(uuidToFind);
     }
     
     @Override
-    public Customer createCustomer(Customer customer){
+    public CustomerDTO createCustomer(CustomerDTO customer){
         customer.setId(UUID.randomUUID());
         customer.setVersion(new Random().nextInt());
         customer.setCreateDate(LocalDateTime.now());
@@ -73,9 +73,9 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer updateCustomer(String id, Customer newCustomer){
+    public CustomerDTO updateCustomer(String id, CustomerDTO newCustomer){
         UUID idToBeFound = UUID.fromString(id);
-        Customer customerToBeUpdated = this.customerFakeBD.get(idToBeFound);
+        CustomerDTO customerToBeUpdated = this.customerFakeBD.get(idToBeFound);
         
         customerToBeUpdated.setName(newCustomer.getName());
         customerToBeUpdated.setLasModifiedDate(LocalDateTime.now());
@@ -89,9 +89,9 @@ public class CustomerServiceImpl implements CustomerService {
         this.customerFakeBD.remove(idToBeFound);
     }
     @Override
-    public void patchCustomer(String id, Customer customer){
+    public void patchCustomer(String id, CustomerDTO customer){
         UUID idToBeFound = UUID.fromString(id);
-        Customer customerToBeUpdated = this.customerFakeBD.get(idToBeFound);
+        CustomerDTO customerToBeUpdated = this.customerFakeBD.get(idToBeFound);
         if(Objects.nonNull(customer.getName())){
             customerToBeUpdated.setName(customer.getName());
         }

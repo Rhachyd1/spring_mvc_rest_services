@@ -27,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rhd.learning.springMvcRestServices.exception.NotFoundException;
-import com.rhd.learning.springMvcRestServices.model.Beer;
+import com.rhd.learning.springMvcRestServices.model.BeerDTO;
 import com.rhd.learning.springMvcRestServices.services.BeerService;
 import com.rhd.learning.springMvcRestServices.services.HeaderService;
 import com.rhd.learning.springMvcRestServices.services.implementations.BeerServiceImpl;
@@ -71,7 +71,7 @@ public class BeerControllerTest {
 
     @Test
     public void getBeerByIdTest() throws Exception{        
-       Beer testBeer = beerServiceImpl.listBeers().get(0);
+       BeerDTO testBeer = beerServiceImpl.listBeers().get(0);
        
        given(beerService.getBeerById(testBeer.getId())).willReturn(Optional.of(testBeer));
 
@@ -86,7 +86,7 @@ public class BeerControllerTest {
 
     @Test
     public void getBeersList() throws Exception{
-        List<Beer> beers = beerServiceImpl.listBeers();
+        List<BeerDTO> beers = beerServiceImpl.listBeers();
         
         given(beerService.listBeers()).willReturn(beers);
 
@@ -99,16 +99,16 @@ public class BeerControllerTest {
     }
     @Test
     public void testCreateNewBeer() throws Exception{     
-        Beer beer = beerServiceImpl.listBeers().get(0);
+        BeerDTO beer = beerServiceImpl.listBeers().get(0);
         beer.setVersion(null);
         beer.setId(null);
         
         
-        given(beerService.createNewBeer(any(Beer.class)))
+        given(beerService.createNewBeer(any(BeerDTO.class)))
         .willReturn(beerServiceImpl.listBeers().get(2));
 
         //Must Mock the headerService since its a dependency
-        given(headerService.locationBuilder(anyString(), any(Beer.class)))
+        given(headerService.locationBuilder(anyString(), any(BeerDTO.class)))
         .willReturn(anyString());
         
         final String testUrl = BASE_URL;
@@ -128,7 +128,7 @@ public class BeerControllerTest {
 
     @Test
     public void testUpdateBeer() throws Exception{
-        Beer beerToUpdate = beerServiceImpl.listBeers().get(0);
+        BeerDTO beerToUpdate = beerServiceImpl.listBeers().get(0);
         beerToUpdate.setName("updatedName");
 
         final String testUrl = BASE_URL+"/"+beerToUpdate.getId();
@@ -143,12 +143,12 @@ public class BeerControllerTest {
         );
 
 
-        verify(beerService).updateBeer(anyString(), any(Beer.class) );
+        verify(beerService).updateBeer(anyString(), any(BeerDTO.class) );
     }
 
     @Test
     public void testDeleteBeer() throws Exception{
-        Beer beerToDelete = beerServiceImpl.listBeers().get(0);
+        BeerDTO beerToDelete = beerServiceImpl.listBeers().get(0);
         final String finalUrl = BASE_URL+"/"+beerToDelete.getId();
         mockMvc.perform(
             MockMvcRequestBuilders.delete(finalUrl)
@@ -162,7 +162,7 @@ public class BeerControllerTest {
 
     @Test
     public void testNotFoundException() throws Exception{
-        Beer beerToDelete = beerServiceImpl.listBeers().get(0);
+        BeerDTO beerToDelete = beerServiceImpl.listBeers().get(0);
         final String finalUrl = BASE_URL+"/"+beerToDelete.getId();
         given(beerService.getBeerById(any(UUID.class))).willThrow(NotFoundException.class);
         mockMvc.perform(MockMvcRequestBuilders.get(finalUrl)).andExpect(MockMvcResultMatchers.status().isNotFound());

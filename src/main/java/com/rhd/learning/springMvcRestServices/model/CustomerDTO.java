@@ -10,7 +10,7 @@ import lombok.ToString;
 @Data
 @ToString
 @Builder
-public class Customer {
+public class CustomerDTO {
     
     private UUID id;
     private String name;

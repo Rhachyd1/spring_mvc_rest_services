@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.rhd.learning.springMvcRestServices.model.Beer;
+import com.rhd.learning.springMvcRestServices.model.BeerDTO;
 import com.rhd.learning.springMvcRestServices.services.BeerService;
 import com.rhd.learning.springMvcRestServices.services.HeaderService;
 
@@ -35,40 +35,40 @@ public class BeerController {
     private final String LOCATION = "Location";
     
     @RequestMapping(method = RequestMethod.GET)
-    public List<Beer> listBeers(){
+    public List<BeerDTO> listBeers(){
         return beerService.listBeers();
     }
     
 
     @RequestMapping(value = "{UUID}",method = RequestMethod.GET)
-    public Beer getBeer(@PathVariable("UUID") String uuid){
+    public BeerDTO getBeer(@PathVariable("UUID") String uuid){
         UUID beerId = UUID.fromString(uuid);
         return beerService.getBeerById(beerId).orElseThrow();
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Beer> handlePost(@RequestBody Beer beer){     
+    public ResponseEntity<BeerDTO> handlePost(@RequestBody BeerDTO beer){     
         HttpHeaders headers = new HttpHeaders();
-        Beer savedBeer = beerService.createNewBeer(beer);
+        BeerDTO savedBeer = beerService.createNewBeer(beer);
         headers.add(LOCATION, headerService.locationBuilder(baseUrl, savedBeer));
-        return new ResponseEntity<Beer>(headers, HttpStatus.CREATED);
+        return new ResponseEntity<BeerDTO>(headers, HttpStatus.CREATED);
     }
     
     @PutMapping(value="{id}")
-    public ResponseEntity<Beer> handlePut(@RequestBody Beer beer, @PathVariable String id){
+    public ResponseEntity<BeerDTO> handlePut(@RequestBody BeerDTO beer, @PathVariable String id){
         HttpHeaders headers = new HttpHeaders();
-        Beer updatedBeer = beerService.updateBeer(id, beer);
+        BeerDTO updatedBeer = beerService.updateBeer(id, beer);
         headers.add(LOCATION, headerService.locationBuilder(baseUrl, updatedBeer));
-        return new ResponseEntity<Beer>(headers, HttpStatus.NO_CONTENT);
+        return new ResponseEntity<BeerDTO>(headers, HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Beer> handleDelete(@PathVariable("id") String id){
+    public ResponseEntity<BeerDTO> handleDelete(@PathVariable("id") String id){
         this.beerService.removeBeer(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
     @PatchMapping("{id}")
-    public ResponseEntity<Beer> handlePatch(@PathVariable("id") String id, Beer beer){
+    public ResponseEntity<BeerDTO> handlePatch(@PathVariable("id") String id, BeerDTO beer){
         this.beerService.patchBeer(id, beer);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
